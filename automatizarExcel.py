@@ -10,7 +10,6 @@ archivo_excel = pd.read_excel('supermarket_sales.xlsx')
 tabla_pivote = archivo_excel.pivot_table(index='Gender', columns='Product line', values='Total', aggfunc='sum').round(0)
 tabla_pivote.to_excel('sales_2021.xlsx', startrow=4, sheet_name='Report')
 
-
 # cargar archivo excel creado para manipularlo con Python
 wb = load_workbook('sales_2021.xlsx')
 pestaña = wb['Report']

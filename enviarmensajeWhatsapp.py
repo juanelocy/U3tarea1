@@ -5,7 +5,6 @@ funcionalidad:
     Enviar mensajes por Whatsapp introduciendo el numero de la persona con el codigo de cada pais
 '''
 
-
 import pyautogui as pg, webbrowser as web , time as tn
 
 '''Ingreso o pedir datos de manera dinamica'''

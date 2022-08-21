@@ -4,7 +4,6 @@ tambien puede ser .mp3 o .mp4, tambien .docx
 Se pueden distintos tipos de documentos 
 '''
 
-
 import os
 
 '''Asignando una direccion de mi ordenador '''
