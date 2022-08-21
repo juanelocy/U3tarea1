@@ -1,50 +1,25 @@
-import pandas as pd
-from openpyxl import load_workbook
-from openpyxl.chart import BarChart, Reference
+from openpyxl import Workbook
 from openpyxl.styles import Font
-import string
+import time 
 
-# Leer achivo excel
-archivo_excel = pd.read_excel('supermarket_sales.xlsx')
-# Hacer tabla pivote y exportar a excel (sales_2021.xlsl)
-tabla_pivote = archivo_excel.pivot_table(index='Gender', columns='Product line', values='Total', aggfunc='sum').round(0)
-tabla_pivote.to_excel('sales_2021.xlsx', startrow=4, sheet_name='Report')
+book=Workbook()
+hoja1=book.active
 
-# cargar archivo excel creado para manipularlo con Python
-wb = load_workbook('sales_2021.xlsx')
-pestaña = wb['Report']
+hoja1['A1']='Id'
+hoja1['A1'].font=Font(color='FF0000', bold=True)
+hoja1['B1']='Nombres'
+hoja1['B1'].font=Font(color='FF0000', bold=True)
+hoja1['C1']='Apellidos'
+hoja1['C1'].font=Font(color='FF0000', bold=True)
+hoja1['D1']='Numero de telefono'
+hoja1.merge_cells('D1:E1')
+hoja1['D1'].font=Font(color='FF0000', bold=True)
+hoja1['F1']='Fecha'
+fecha=time.strftime('%x')
+hoja1['F2'] = fecha
 
-# referencias de filas/columnas
-min_col = wb.active.min_column
-max_col = wb.active.max_column
-min_fila = wb.active.min_row
-max_fila = wb.active.max_row
 
-# creando gráficos/charts
-barchart = BarChart()
-data = Reference(pestaña, min_col=min_col+1, max_col=max_col, min_row=min_fila, max_row=max_fila)
-categorias = Reference(pestaña, min_col=min_col, max_col=min_col, min_row=min_fila+1, max_row=max_fila)
-barchart.add_data(data, titles_from_data=True)
-barchart.set_categories(categorias)
-pestaña.add_chart(barchart, 'B12')
-barchart.title = 'Ventas'
-barchart.style = 2
+hoja2=book.create_sheet('Hoja 2')
+hoja2['A1']='Creacion de Segunda hoja'
 
-# creando abecedario para usar como referencia de columnas en Excel
-abecedario = list(string.ascii_uppercase)
-abecedario_excel = abecedario[0:max_col]
-
-# aplicando formulas a celdas de Excel
-for i in abecedario_excel:
-    if i!='A':
-        pestaña[f'{i}{max_fila+1}'] = f'=SUM({i}{min_fila+1}:{i}{max_fila})'
-        pestaña[f'{i}{max_fila+1}'].style = 'Currency'
-pestaña[f'{abecedario_excel[0]}{max_fila+1}'] = 'Total'
-
-# Dando formato al reporte de Excel
-pestaña['A1'] = 'Reporte'
-pestaña['A2'] = '2021'
-pestaña['A1'].font = Font('Arial', bold=True, size=20)
-pestaña['A2'].font = Font('Arial', bold=True, size=12)
-
-wb.save('sales_2021.xlsx')
+book.save('ExcelDePrueba.xlsx')
