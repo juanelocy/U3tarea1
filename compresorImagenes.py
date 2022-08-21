@@ -5,6 +5,7 @@ Programa para comprimir el peso de las imagenes
 from PIL import Image
 import os
 
+
 '''asginando a variables unas direcciones que se localizan en mi computador'''
 carpetaDescargas = "/Users/CORE i3/Downloads/"
 carpetaImagenes = "/Users/CORE i3/Pictures/"
